@@ -6,31 +6,33 @@ from multiprocessing.dummy import Pool as t_pool
 from threading import Thread
 from queue import Queue
 from time import time
+from re import compile
 
 
 def lemma(term):
-    return term, WordNetLemmatizer().lemmatize(term)
+    return term, ' '.join([WordNetLemmatizer().lemmatize(t) for t in term.split(' ')])
 
 
 def lemma_queue(term, q):
-    q.put(term, WordNetLemmatizer().lemmatize(term))
+    q.put(term, ' '.join([WordNetLemmatizer().lemmatize(t) for t in term.split(' ')]))
 
 
 def main():
-    terms = []
     t0 = time()
+    terms = []
     pool_size = cpu_count()
     wordnet.ensure_loaded()
+    punct = compile('[^A-z0-9 ]')
 
     with open('./data/searches', 'r') as fi:
         for term in fi:
-            terms.append(term.strip())
+            terms.append(punct.sub('', term.strip()))
     list_size = len(terms) // pool_size
     t_dif = time() - t0
 
     # Serial -- 3 seconds
     for term in terms:
-        lemma(term)
+        print(lemma(term))
     t1 = time()
     print(t1 - t0)
     print()
