@@ -28,14 +28,14 @@ def main():
     list_size = len(terms) // pool_size
     t_dif = time() - t0
 
-    # Serial
+    # Serial -- 3 seconds
     for term in terms:
         lemma(term)
     t1 = time()
     print(t1 - t0)
     print()
 
-    # Futures Concurrent Threads
+    # Futures Concurrent Threads -- 9 seconds
     with ThreadPoolExecutor(pool_size) as a:
         b = a.map(lemma, terms, chunksize=list_size)
         for z in b:
@@ -44,7 +44,7 @@ def main():
     print(t2 - t1 + t_dif)
     print()
 
-    # Futures Concurrent Multiprocesses
+    # Futures Concurrent Multiprocess -- 9 seconds
     with ProcessPoolExecutor(pool_size) as a:
         b = a.map(lemma, terms, chunksize=list_size)
         for z in b:
@@ -53,7 +53,7 @@ def main():
     print(t3 - t2 + t_dif)
     print()
 
-    # Threading
+    # Threading -- 20 seconds
     q = Queue()
     threads = []
     for term in terms:
@@ -71,14 +71,14 @@ def main():
     print(t4 - t3 + t_dif)
     print()
 
-    # Multiprocessing Pool
+    # Multiprocessing Pool -- 11 seconds
     p = m_pool(pool_size)
     p.map(lemma, terms)
     t5 = time()
     print(t5 - t4 + t_dif)
     print()
 
-    # Threadding Pool
+    # Threadding Pool -- 3 seconds
     p = t_pool(pool_size)
     p.map(lemma, terms)
     t6 = time()
