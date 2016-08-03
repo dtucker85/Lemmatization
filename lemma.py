@@ -22,17 +22,17 @@ def main():
     terms = []
     pool_size = cpu_count()
     wordnet.ensure_loaded()
-    punct = compile('[^A-z0-9 ]')
+    punct = compile('[^A-z0-9 ]+')
 
     with open('./data/searches', 'r') as fi:
         for term in fi:
-            terms.append(punct.sub('', term.strip()))
+            terms.append(punct.sub(' ', term.strip()))
     list_size = len(terms) // pool_size
     t_dif = time() - t0
 
     # Serial -- 3 seconds
     for term in terms:
-        print(lemma(term))
+        lemma(term)
     t1 = time()
     print(t1 - t0)
     print()
