@@ -80,7 +80,7 @@ def main():
     print(t5 - t4 + t_dif)
     print()
 
-    # Threadding Pool -- 3 seconds
+    # Thread Pool -- 3 seconds
     p = t_pool(pool_size)
     p.map(lemma, terms)
     t6 = time()
