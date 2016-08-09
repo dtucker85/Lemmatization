@@ -25,7 +25,7 @@ class Timer(object):
             sample = [next(strap) for _ in range(size)]
             for key, value in self.functions.items():
                 t0 = time()
-                value(self.data)
+                value(sample)
                 print('|{:<30}|{:>15,d}|{:>15,.3f}|'.format(key, size, (time() - t0)))
             size *= self.scale
         print('-'*64)
