@@ -27,5 +27,5 @@ class Timer(object):
                 t0 = time()
                 value(sample)
                 print('|{:<30}|{:>15,d}|{:>15,.3f}|'.format(key, size, (time() - t0)))
-            size *= self.scale
+            size **= self.scale
         print('-'*64)
