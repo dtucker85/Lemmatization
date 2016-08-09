@@ -1,4 +1,3 @@
-from timeit import default_timer
 from random import choice
 from time import time
 
